@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchNotes, FetchNotesResponse } from "@/lib/api";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
-import Loader from "./loading";
+import Loader from "../loading";
 import ErrorMessage from "./error";
 import EmptyState from "./empty";
 

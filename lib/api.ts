@@ -1,5 +1,5 @@
 import { Note } from "../types/note";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 
 export interface FetchNotesResponse {
   notes: Note[];
@@ -59,4 +59,17 @@ export async function deleteNote(id: string): Promise<Note> {
   return response.data;
 }
 
-export default function fetchNoteById() {}
+const getAuthConfig = (): AxiosRequestConfig => {
+  return {
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  };
+};
+export default async function fetchNoteById(id: string): Promise<Note> {
+  const response: AxiosResponse<Note> = await axios.get(
+    `${BASE_URL}/${id}`,
+    getAuthConfig()
+  );
+  return response.data;
+}
