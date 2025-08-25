@@ -48,14 +48,9 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
     values: FormValues,
     formikHelpers: FormikHelpers<FormValues>
   ) => {
-    mutation.mutate(values, {
-      onSuccess: () => {
-        formikHelpers.resetForm();
-        onCancel();
-      },
-    });
+    mutation.mutate(values);
+    formikHelpers.resetForm();
   };
-
   return (
     <Formik
       initialValues={initialFormValues}

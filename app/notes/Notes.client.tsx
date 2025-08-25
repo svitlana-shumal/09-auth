@@ -14,22 +14,17 @@ import Loader from "../loading";
 import ErrorMessage from "./error";
 import EmptyState from "./empty";
 
-interface NotesClientProps {
-  initialData: FetchNotesResponse;
-}
-export default function NotesClient({ initialData }: NotesClientProps) {
+export default function NotesClient() {
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 1000);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, isError } = useQuery<FetchNotesResponse>(
-    {
+  const { data, isLoading, isFetching, isError, error } =
+    useQuery<FetchNotesResponse>({
       queryKey: ["notes", page, debouncedSearch],
       queryFn: () => fetchNotes(debouncedSearch, page),
-      initialData,
-    }
-  );
+    });
   const handleSearchChange = (value: string) => {
     setSearch(value);
     setPage(1);
@@ -60,7 +55,7 @@ export default function NotesClient({ initialData }: NotesClientProps) {
 
       {(isLoading || isFetching) && <Loader />}
 
-      {isError && <ErrorMessage />}
+      {isError && <ErrorMessage error={error} />}
       {!data?.notes?.length && !isLoading && !isError && (
         <EmptyState message="No results found." />
       )}
