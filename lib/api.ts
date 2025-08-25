@@ -1,5 +1,5 @@
 import { Note } from "../types/note";
-import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export interface FetchNotesResponse {
   notes: Note[];
@@ -11,14 +11,14 @@ const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 export async function fetchNotes(
   search: string,
-  page: number = 1,
-  perPage: number = 12
+  page = 1,
+  perPage = 12
 ): Promise<FetchNotesResponse> {
-  const params: Record<string, unknown> = {
+  const params: Record<string, string> = {
     page: String(page),
     perPage: String(perPage),
   };
-  if (search.trim()) {
+  if (search.trim() !== "") {
     params.search = search;
   }
   const config = {
@@ -59,17 +59,15 @@ export async function deleteNote(id: string): Promise<Note> {
   return response.data;
 }
 
-const getAuthConfig = (): AxiosRequestConfig => {
-  return {
+export default async function fetchNoteById(id: string): Promise<Note> {
+  const config = {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
   };
-};
-export default async function fetchNoteById(id: string): Promise<Note> {
   const response: AxiosResponse<Note> = await axios.get(
     `${BASE_URL}/${id}`,
-    getAuthConfig()
+    config
   );
   return response.data;
 }
