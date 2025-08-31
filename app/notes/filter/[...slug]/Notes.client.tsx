@@ -1,6 +1,6 @@
 "use client";
 
-import css from "./Notes.page.module.css";
+import css from "./Notes.module.css";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
@@ -13,8 +13,13 @@ import { useDebounce } from "use-debounce";
 import Loader from "../../../loading";
 import ErrorMessage from "./error";
 import EmptyState from "./empty";
+import { NoteTag } from "@/types/note";
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag?: NoteTag;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 1000);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,8 +27,8 @@ export default function NotesClient() {
 
   const { data, isLoading, isFetching, isError, error } =
     useQuery<FetchNotesResponse>({
-      queryKey: ["notes", page, debouncedSearch],
-      queryFn: () => fetchNotes(debouncedSearch, page),
+      queryKey: ["notes", page, debouncedSearch, tag],
+      queryFn: () => fetchNotes({ search: debouncedSearch, page, tag }),
       placeholderData: (prevData) => prevData,
     });
   const handleSearchChange = (value: string) => {

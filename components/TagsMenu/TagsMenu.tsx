@@ -11,7 +11,9 @@ export default function TagsMenu() {
   const toggle = () => setIsOpen(!isOpen);
   return (
     <div className={css.menuContainer}>
-      <button className={css.menuButton}>Notes ▾</button>
+      <button className={css.menuButton} onClick={toggle}>
+        Notes ▾
+      </button>
       {isOpen && (
         <ul className={css.menuList}>
           <li className={css.menuItem}>

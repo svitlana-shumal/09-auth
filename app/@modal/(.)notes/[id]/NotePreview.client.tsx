@@ -3,8 +3,7 @@
 import css from "./NotePreview.module.css";
 import fetchNoteById from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter, useParams } from "next/navigation";
 import Modal from "@/components/Modal/Modal";
 
 export default function PreviewModal() {
@@ -26,23 +25,25 @@ export default function PreviewModal() {
   if (!note || error) {
     return <p>Something went wrong.</p>;
   }
-  <Modal onClose={close}>
-    <button onClick={close} className={css.backBtn}>
-      Close
-    </button>
-    <div className={css.container}>
-      <div className={css.item}>
-        <div className={css.header}>
-          <h2>{note.title}</h2>
+  return (
+    <Modal onClose={close}>
+      <button onClick={close} className={css.backBtn}>
+        Close
+      </button>
+      <div className={css.container}>
+        <div className={css.item}>
+          <div className={css.header}>
+            <h2>{note.title}</h2>
+          </div>
+          <p className={css.tag}>{note.tag}</p>
+          <p className={css.content}>{note.content}</p>
+          <p className={css.date}>
+            {note?.createdAt
+              ? `Created at: ${note.createdAt} `
+              : `Updated at: ${note.updatedAt}`}
+          </p>
         </div>
-        <p className={css.tag}>{note.tag}</p>
-        <p className={css.content}>{note.content}</p>
-        <p className={css.date}>
-          {note?.createdAt
-            ? `Created at: ${note.createdAt} `
-            : `Updated at: ${note.updatedAt}`}
-        </p>
       </div>
-    </div>
-  </Modal>;
+    </Modal>
+  );
 }

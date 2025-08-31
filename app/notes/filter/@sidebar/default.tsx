@@ -1,7 +1,7 @@
 import Link from "next/link";
 import css from "./SidebarNotes.module.css";
 
-export default function SideBarNotes() {
+export default function SidebarNotes() {
   const tags = ["All", "Todo", "Work", "Personal", "Meeting", "Shopping"];
   return (
     <ul className={css.menuList}>

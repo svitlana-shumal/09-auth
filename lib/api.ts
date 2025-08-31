@@ -1,4 +1,4 @@
-import { Note } from "../types/note";
+import { Note, NoteTag } from "../types/note";
 import axios, { AxiosResponse } from "axios";
 
 export interface FetchNotesResponse {
@@ -6,26 +6,38 @@ export interface FetchNotesResponse {
   totalPages: number;
 }
 
+interface FetchNotesParams {
+  search?: string;
+  page?: number;
+  perPage?: number;
+  tag?: NoteTag;
+}
 const BASE_URL = "https://notehub-public.goit.study/api/notes";
 const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
+const headers = {
+  Authorization: `Bearer ${TOKEN}`,
+};
+
 export async function fetchNotes(
-  search: string,
-  page = 1,
-  perPage = 12
+  params: FetchNotesParams
 ): Promise<FetchNotesResponse> {
-  const params: Record<string, string> = {
+  const { page = 1, perPage = 12, search = "", tag } = params;
+  const queryParams: Record<string, string> = {
     page: String(page),
     perPage: String(perPage),
   };
-  if (search.trim() !== "") {
-    params.search = search;
+  const trimmedSearch = typeof search === "string" ? search.trim() : "";
+  if (trimmedSearch) {
+    queryParams.search = trimmedSearch;
+  }
+  if (tag) {
+    queryParams.tag = tag;
   }
   const config = {
-    params,
-    headers: { Authorization: `Bearer ${TOKEN}` },
+    headers,
+    params: queryParams,
   };
-
   const response = await axios.get<FetchNotesResponse>(BASE_URL, config);
   return response.data;
 }
@@ -35,23 +47,14 @@ export async function createNote(note: {
   content: string;
   tag: string;
 }): Promise<Note> {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-  };
+  const config = { headers };
 
   const response = await axios.post<Note>(BASE_URL, note, config);
   return response.data;
 }
 
 export async function deleteNote(id: string): Promise<Note> {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-  };
-
+  const config = { headers };
   const response: AxiosResponse<Note> = await axios.delete(
     `${BASE_URL}/${id}`,
     config
@@ -60,11 +63,7 @@ export async function deleteNote(id: string): Promise<Note> {
 }
 
 export default async function fetchNoteById(id: string): Promise<Note> {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-  };
+  const config = { headers };
   const response: AxiosResponse<Note> = await axios.get(
     `${BASE_URL}/${id}`,
     config
