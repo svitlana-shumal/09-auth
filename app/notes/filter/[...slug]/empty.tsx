@@ -1,4 +1,4 @@
-import css from "./Notes.page.module.css";
+import css from "./Notes.module.css";
 
 interface EmptyStateProp {
   message: string;
