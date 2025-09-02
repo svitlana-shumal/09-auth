@@ -1,8 +1,5 @@
-// "use client";
-
 import type { Metadata } from "next";
 import css from "./page.module.css";
-// import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
