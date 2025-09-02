@@ -70,3 +70,12 @@ export default async function fetchNoteById(id: string): Promise<Note> {
   );
   return response.data;
 }
+
+const DEFAULT_TAGS = ["Todo", "Personal", "Work", "Shopping", "Meeting"];
+
+export async function getTags(): Promise<string[]> {
+  const { notes } = await fetchNotes({ page: 1, perPage: 12 });
+  const tagsFromNotes = Array.from(new Set(notes.map((note) => note.tag)));
+
+  return Array.from(new Set([...DEFAULT_TAGS, ...tagsFromNotes]));
+}
