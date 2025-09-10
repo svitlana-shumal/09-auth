@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import CreateNoteClient from "./CreateNote.client";
 import { Metadata } from "next";
-import { getTags } from "@/lib/api/api";
+import { getTags } from "@/lib/api/serverApi";
 
 export const metadata: Metadata = {
   title: "Create note",
