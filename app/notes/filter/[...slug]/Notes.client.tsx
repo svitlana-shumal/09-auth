@@ -5,7 +5,7 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNotes, FetchNotesResponse } from "@/lib/api";
+import { fetchNotes, FetchNotesResponse } from "@/lib/api/api";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import Loader from "../../../loading";

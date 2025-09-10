@@ -1,7 +1,7 @@
 "use client";
 
 import NoteForm from "@/components/NoteForm/NoteForm";
-import { getTags } from "@/lib/api";
+import { getTags } from "@/lib/api/api";
 import { NoteTag } from "@/types/note";
 import { useQuery } from "@tanstack/react-query";
 
