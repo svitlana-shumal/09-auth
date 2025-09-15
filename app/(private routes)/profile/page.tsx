@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import css from "./profilePage.module.css";
+import css from "./ProfilePage.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { User } from "@/types/user";
