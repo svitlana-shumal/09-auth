@@ -72,8 +72,8 @@ export default function EditProfilePage() {
         <Image
           src="https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"
           alt="User Avatar"
-          width={150}
-          height={150}
+          width={120}
+          height={120}
           className={css.avatar}
         />
 
