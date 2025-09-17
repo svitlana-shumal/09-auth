@@ -29,10 +29,9 @@ export default async function Profile() {
 
   try {
     user = await getUserProfile();
-  } catch (err) {
-    console.error("Failed to fetch user profile:", err);
+  } catch (error) {
+    console.error("Failed to fetch user profile:", error);
   }
-
   if (!user) {
     return (
       <main className={css.mainContent}>
@@ -56,8 +55,8 @@ export default async function Profile() {
           <Image
             src="https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"
             alt="User Avatar"
-            width={150}
-            height={150}
+            width={120}
+            height={120}
             className={css.avatar}
           />
         </div>

@@ -1,4 +1,6 @@
-📝 Note Hub
+📝
+Note Hub
+
 Note Hub is a web application for creating and managing personal notes with user authentication.
 The project was built as part of the GoIT Fullstack course and includes features such as user registration, login, profile editing, and working with notes.
 
