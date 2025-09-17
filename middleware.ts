@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { checkSession } from "./lib/api/serverApi";
+import { checkSessionForMiddleware } from "./lib/api/serverApi";
 
 const PUBLIC_ROUTES = ["/sign-in", "/sign-up"];
 const PRIVATE_ROUTES = ["/profile", "/notes"];
@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
   const sessionValid = !!accessToken;
   if (!accessToken && refreshToken) {
     try {
-      const newTokens = await checkSession(refreshToken);
+      const newTokens = await checkSessionForMiddleware(refreshToken);
 
       const res = NextResponse.next();
       if (newTokens.accessToken) {

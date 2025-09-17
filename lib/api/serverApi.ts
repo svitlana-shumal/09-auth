@@ -114,6 +114,23 @@ export async function checkSession(): Promise<AxiosResponse<SessionResponse>> {
     throw new Error("Session check failed");
   }
 }
+export async function checkSessionForMiddleware(
+  refreshToken: string
+): Promise<SessionResponse> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/session`,
+    {
+      method: "GET",
+      headers: {
+        Cookie: `refreshToken=${refreshToken}`,
+      },
+    }
+  );
+
+  if (!response.ok) throw new Error("Session check failed");
+
+  return await response.json();
+}
 
 export async function fetchNotes(
   search = "",
