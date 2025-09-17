@@ -5,6 +5,8 @@ import Image from "next/image";
 import { User } from "@/types/user";
 import { getUserProfile } from "@/lib/api/serverApi";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Note Hub. Your Profile",
   description: "Personal profile for making notes",
