@@ -27,7 +27,7 @@ export default function AuthProvider({
         setUser(user);
 
         if (PUBLIC_ROUTES.includes(pathname)) router.replace("/profile");
-      } catch (err) {
+      } catch {
         clearIsAuthenticated();
 
         if (PRIVATE_ROUTES.some((route) => pathname.startsWith(route))) {
