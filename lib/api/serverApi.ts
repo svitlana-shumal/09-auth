@@ -3,7 +3,7 @@ import { Note } from "@/types/note";
 import { RegisterRequest, LoginRequest, SessionResponse } from "@/types/auth";
 import { cookies } from "next/headers";
 import { nextServer } from "./api";
-import { isAxiosError } from "axios";
+import { AxiosResponse, isAxiosError } from "axios";
 
 const DEFAULT_TAGS = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 
@@ -15,6 +15,7 @@ export async function getAuthHeaders(): Promise<{
     .getAll()
     .map((c) => `${c.name}=${c.value}`)
     .join("; ");
+
   return {
     headers: { Cookie: cookieString },
   };
@@ -98,21 +99,19 @@ export async function updateUser(
   }
 }
 
-export async function checkSession(
-  refreshToken: string
-): Promise<SessionResponse> {
+export async function checkSession(): Promise<AxiosResponse<SessionResponse>> {
   try {
-    const { data } = await nextServer.post<SessionResponse>("/auth/refresh", {
-      refreshToken,
-    });
-    return data;
+    const headers = await getAuthHeaders();
+    const response = await nextServer.get<SessionResponse>(
+      "/auth/session",
+      headers
+    );
+    return response;
   } catch (error) {
     if (isAxiosError(error)) {
-      throw new Error(
-        error.response?.data?.message || "Session refresh failed"
-      );
+      throw new Error(error.response?.data?.message || "Session check failed");
     }
-    throw new Error("Session refresh failed");
+    throw new Error("Session check failed");
   }
 }
 
