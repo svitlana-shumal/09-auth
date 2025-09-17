@@ -29,8 +29,8 @@ export default async function Profile() {
 
   try {
     user = await getUserProfile();
-  } catch (error) {
-    console.error("Failed to fetch user profile:", error);
+  } catch {
+    console.error("Failed to fetch user profile");
   }
   if (!user) {
     return (
